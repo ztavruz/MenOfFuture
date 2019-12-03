@@ -9,7 +9,7 @@ use Engine\Router\Router;
 
 
 $router = new Router($routes);
-$router->run();
+$router->start();
 
 
 

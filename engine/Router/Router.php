@@ -6,27 +6,42 @@ use Engine\View\View;
 class Router
 {
     private $url;
+    private $routes = [];
+    private $params = [];
 
     public function __construct($routes)
     {
         $this->url = $this->url();
         
-        // $arr = require_once VIEW_DIR . 'arr.php';
-        // echo $arr['1'];
+        $this->routes = $this->loadRoutes();
     }
 
-    public function run()
+    public function start()
     {
-       if ($this->pageExist() != '') {
+        if ($this->pageExists()) {
+            $controller_name = ucfirst($this->params['controller']) . 'Controller';
+            $namespace = "Engine\\Controllers\\" . $controller_name;
+            $model_name = ucfirst($this->params['controller']);
 
-            $url = $this->pageExist();
-            $view = new View($url);
-            return $view->render();
+            if (class_exists($namespace)) {
+                $controller = new $namespace($this->params);
+                $method = $this->params['method'] . 'Action';
 
-       }else
-       {
-        echo 'Страница не найдена';
-       }
+                if (method_exists($controller, $method)) {
+                    $controller->$method();
+                }else
+                {
+                 exit("Метод " . $method . " не найден в классе " . $namespace);
+                }
+            }else
+            {
+             exit("Контроллер " . $controller_name . " не найденюъ.");
+            }
+        }else
+        {
+         exit("Роут " . $this->url . " не найден.");
+        }
+        
     }
 
     public function url()
@@ -35,36 +50,31 @@ class Router
         $url = trim($url, '/');
         $url = preg_replace("#\?.*$#", null, $url);
         if ($url == '') {
-            $url = 'main';
+            $url = 'guest';
         }
 
-        // echo $url1 . "<br>";
-        // $getUrl = preg_replace("#^.*\?#", null, $url);
-        // echo $getUrl . "<br>";
         return $url;
     }
 
-    
-
-    public function pageExist()
+    public function loadRoutes()
     {
-        $views = array_diff(scandir(VIEW_DIR), ['.','..']);
-        $result = "";
-        foreach ($views as $view) {
-            if ($view == $this->url) {
-                $result = VIEW_DIR . "/" . $this->url;
-            }
-            elseif($view != $this->url) {
-                $views =  array_diff(scandir(LOCA_DIR), ['.','..']);
-                foreach ($views as $view) {
-                    if ($view == $this->url) {
-                        $result = LOCA_DIR . "/" . $this->url;
-                    }
-                }
+        $routes = require CONFIG_DIR . "routes.php";
+        
+        return $routes;
+    }
+
+
+    public function pageExists()
+    {
+
+        foreach ($this->routes as $key => $route) {
+            if ($this->url == $key) {
+                $this->params = $route;
+                return true;
             }
         }
 
-        return $result;
+        return false;
     }
 }
 
