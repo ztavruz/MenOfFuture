@@ -1,0 +1,21 @@
+{
+    "name": "ztavruz/men-of-future",
+    "require": {
+        "gabordemooij/redbean": "^5.4"
+    },
+    "authors": [
+        {
+            "name": "ztavruz",
+            "email": "ztavruz1987@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Engine\\": "engine",
+            "Admin\\": "admin",
+            "Game\\": "game",
+            "Patterns\\": "patterns",
+            "Api\\": "api"
+        }
+    }
+}
