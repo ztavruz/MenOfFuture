@@ -1,0 +1,78 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    background: #fff;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+.br_black{
+    border: 1px solid black;
+}
+
+.left{
+    grid-column: 1/2;
+    grid-row: 1/4;
+    min-height: 650px;
+    max-height: 650px;
+}
+.center{
+    display: grid;
+    grid-column: 2/3;
+    grid-row: 1/3;
+    min-height: 500px;
+    border: 1px solid blue;
+    /* justify-items: center; */
+    /* align-items: center; */
+}
+.display{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid red;
+    /* justify-items: center; */
+}
+
+.planeta_1, .planeta_2, .planeta_3{
+    /* grid-column: 2/3; */
+    grid-row: 1/2;
+    /* align-self: flex-start; */
+}
+.planeta_4{
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+.zvezda{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+.zvezda img{
+    /* width: max-content; */
+    max-width: 300px;
+    max-height: 300px;
+}
+.planeta_5{
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+.planeta_6, .planeta_7, .planeta_8{
+    /* grid-column: 2/3; */
+    grid-row: 3/4;
+}
+
+.right{
+    grid-column: 3/4;
+    grid-row: 1/4;
+}
+.down{
+    grid-column: 2/3;
+    grid-row: 3/4;
+    
+}
