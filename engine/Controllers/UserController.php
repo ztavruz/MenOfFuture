@@ -2,6 +2,7 @@
 
 namespace Engine\Controllers;
 use Engine\Controllers\Controller;
+use Engine\Models\User;
 
 class UserController extends Controller
 {
@@ -20,6 +21,7 @@ class UserController extends Controller
     }
     public function registerAction()
     {
+        $this->model->create();
         $this->view->render();
     }
 }

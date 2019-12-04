@@ -14,7 +14,7 @@ class View
     }
 
     public function render()
-    {
+    {   
         $page = __DIR__. "/../../view/{$this->folder}/{$this->page}/index.php";
         ob_start();
         require $page;
@@ -31,7 +31,7 @@ class View
         $links = "";
 
         foreach ($items as $item) {
-            $links .= "<link rel=\"stylesheet\" href=\"/libs/css/{$item}\">";
+            $links .= "<link rel='stylesheet' type='text/css' href='/libs/css/{$item}'>";
         }
         return $links;
     }
@@ -44,20 +44,34 @@ class View
         $scripts = "";
 
         foreach ($items as $item) {
-            $scripts .= "<script src=\"/libs/js/{$item}\"></script>";
+            $scripts .= "<script src='/libs/js/{$item}'></script>";
         }
         return $scripts;
     }
 
-    public function fileCss()
+    public function filesCss()
     {
-        $css = "<link rel='stylesheet' href='/view/{$this->folder}/{$this->page}/styles.css'>";
-        return $css;
+        $items = scandir( __DIR__. "/../../view/{$this->folder}/{$this->page}/css");
+        $items = array_diff($items, ['.','..']);
+
+        $links = "";
+
+        foreach ($items as $item) {
+            $links .= "<link rel='stylesheet' href='/view/{$this->folder}/{$this->page}/css/{$item}'>";
+        }
+        return $links;
     }
 
-    public function fileJs()
+    public function filesJs()
     {
-        $js = "<script src='/view/{$this->folder}/{$this->page}/scripts.js'></script>";
-        return $js;
+        $items = scandir( __DIR__. "/../../view/{$this->folder}/{$this->page}/js");
+        $items = array_diff($items, ['.','..']);
+
+        $scripts = "";
+
+        foreach ($items as $item) {
+            $scripts .= "<script src='/view/{$this->folder}/{$this->page}/js/{$item}'></script>";
+        }
+        return $scripts;
     }
 }

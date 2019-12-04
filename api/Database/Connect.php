@@ -9,7 +9,7 @@ class Connect
     public static function connect(){
 
         if (!R::testConnection()) {
-            R::setup("mysql:host=localhost;dbname=hardreality", "root", "");
+            R::setup("mysql:host=localhost;dbname=menoffuture", "root", "");
         }
 
     }
