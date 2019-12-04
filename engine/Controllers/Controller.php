@@ -14,7 +14,7 @@ abstract class Controller
         $namespace = "Engine\\Models\\" . $params['controller'];
         $this->model = new $namespace();
         
-        $this->view = new View($params['controller'], $params['method']);   
+        $this->view = new View($params['controller'], $params['page']);   
     }
     
 }

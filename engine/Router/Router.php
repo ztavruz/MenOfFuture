@@ -35,7 +35,7 @@ class Router
                 }
             }else
             {
-             exit("Контроллер " . $controller_name . " не найденюъ.");
+             exit("Контроллер " . $controller_name . " не найден.");
             }
         }else
         {

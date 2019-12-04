@@ -4,19 +4,28 @@ return [
 
     "guest" => [
         'controller' => 'user',
-        'method'     => 'guest'
+        'method'     => 'guest',
+        'page'     => 'guest'
     ],
     "register" => [
         'controller' => 'user',
-        'method'     => 'register'
+        'method'     => 'register',
+        'page'     => 'register'
+    ],
+    "newuser" => [
+        'controller' => 'user',
+        'method'     => 'create',
+        'page'     => 'main'
     ],
     "author" => [
         'controller' => 'user',
-        'method'     => 'author'
+        'method'     => 'author',
+        'page'     => 'main'
     ],
     "main" => [
         'controller' => 'user',
-        'method'     => 'main'
+        'method'     => 'main',
+        'page'     => 'main'
     ],
     
     "allUser" => [

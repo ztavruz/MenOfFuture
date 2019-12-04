@@ -13,9 +13,10 @@ class View
         $this->page = $page;
     }
 
-    public function render()
+    public function render($data)
     {   
         $page = __DIR__. "/../../view/{$this->folder}/{$this->page}/index.php";
+        $pagestr = __DIR__. "/../../view/{$this->folder}/{$this->page}/index.php";
         ob_start();
         require $page;
         $page = ob_get_clean();

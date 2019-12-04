@@ -13,15 +13,41 @@ class UserController extends Controller
 
     public function authorAction()
     {
-        $this->view->render();
+        
     }
     public function guestAction()
     {
         $this->view->render();
     }
+    
     public function registerAction()
     {
-        $this->model->create();
-        $this->view->render();
+        $this->render();
     }
+    public function createAction()
+    {
+
+        $data = $_POST;
+        $this->model->create($data);
+
+        $result = $this->model->getUser($data);
+        // var_dump($result);
+        $this->render($result);
+
+    }
+    public function mainAction()
+    {
+        $this->render();
+    }
+
+
+
+
+
+
+    public function render($data = null)
+    {
+        $this->view->render($data);
+    }
+
 }
