@@ -4,7 +4,7 @@
 
     </div>
     <div class="col-10 col-sm-8 col-md-4 col-lg-4 col-xl-4">
-      <form action="newuser" method="POST">
+      <form action="signup" method="POST">
         <div class="form-group">
         <div class="form_title">Регистрация</div>
         </div>

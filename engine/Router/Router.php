@@ -6,42 +6,25 @@ use Engine\View\View;
 class Router
 {
     private $url;
-    private $routes = [];
-    private $params = [];
 
     public function __construct($routes)
     {
         $this->url = $this->url();
         
-        $this->routes = $this->loadRoutes();
     }
 
-    public function start()
+    public function run()
     {
-        if ($this->pageExists()) {
-            $controller_name = ucfirst($this->params['controller']) . 'Controller';
-            $namespace = "Engine\\Controllers\\" . $controller_name;
-            $model_name = ucfirst($this->params['controller']);
+       if ($this->pageExist() != '') {
 
-            if (class_exists($namespace)) {
-                $controller = new $namespace($this->params);
-                $method = $this->params['method'] . 'Action';
+            $url = $this->pageExist();
+            $view = new View($url);
+            return $view->render();
 
-                if (method_exists($controller, $method)) {
-                    $controller->$method();
-                }else
-                {
-                 exit("Метод " . $method . " не найден в классе " . $namespace);
-                }
-            }else
-            {
-             exit("Контроллер " . $controller_name . " не найден.");
-            }
-        }else
-        {
-         exit("Роут " . $this->url . " не найден.");
-        }
-        
+       }else
+       {
+        echo 'Страница не найдена';
+       }
     }
 
     public function url()
@@ -53,28 +36,23 @@ class Router
             $url = 'guest';
         }
 
+        
         return $url;
     }
 
-    public function loadRoutes()
+    
+
+    public function pageExist()
     {
-        $routes = require CONFIG_DIR . "routes.php";
-        
-        return $routes;
-    }
-
-
-    public function pageExists()
-    {
-
-        foreach ($this->routes as $key => $route) {
-            if ($this->url == $key) {
-                $this->params = $route;
-                return true;
+        $views = array_diff(scandir(VIEW_DIR), ['.','..']);
+        $result = "";
+        foreach ($views as $view) {
+            if ($view == $this->url) {
+                $result =  $this->url;
             }
         }
 
-        return false;
+        return $result;
     }
 }
 

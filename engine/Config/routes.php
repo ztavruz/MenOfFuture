@@ -4,33 +4,32 @@ return [
 
     "guest" => [
         'controller' => 'user',
-        'method'     => 'guest',
-        'page'     => 'guest'
+        'method'     => 'guest'
     ],
     "register" => [
         'controller' => 'user',
         'method'     => 'register',
-        'page'     => 'register'
     ],
-    "newuser" => [
+    "signup" => [
         'controller' => 'user',
-        'method'     => 'create',
-        'page'     => 'main'
+        'method'     => 'signup'
     ],
-    "author" => [
+    "signin" => [
         'controller' => 'user',
-        'method'     => 'author',
-        'page'     => 'main'
+        'method'     => 'signin'
     ],
-    "main" => [
-        'controller' => 'user',
-        'method'     => 'main',
-        'page'     => 'main'
-    ],
+    // "author" => [
+    //     'controller' => 'user',
+    //     'method'     => 'author'
+    // ],
+    // "main" => [
+    //     'controller' => 'user',
+    //     'method'     => 'main'
+    // ],
     
-    "allUser" => [
-        'controller' => 'user',
-        'method'     => 'allUser'
-    ],
+    // "allUser" => [
+    //     'controller' => 'user',
+    //     'method'     => 'allUser'
+    // ],
 
 ];

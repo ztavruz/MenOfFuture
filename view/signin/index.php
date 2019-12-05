@@ -5,7 +5,7 @@
     </div>
     <div class="col-10 col-sm-8 col-md-4 col-lg-4 col-xl-4">
     <div class="form_title">Вход</div>
-      <form>
+      <form action="signin" method="POST">  
       
         <div class="form-group">
           <label for="exampleInputEmail1">Ваш логин или email:</label>
