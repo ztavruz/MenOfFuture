@@ -4,7 +4,7 @@
 
     </div>
     <div class="col-10 col-sm-8 col-md-4 col-lg-4 col-xl-4">
-      <form action="signup" method="POST">
+      <form action="api/user/signup" method="POST">
         <div class="form-group">
         <div class="form_title">Регистрация</div>
         </div>
@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
           <label for="password1">Задайте Пароль:</label>
-          <input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password">
         </div>
         <div class="form-group">
           <label for="password2">Повторите Пароль:</label>

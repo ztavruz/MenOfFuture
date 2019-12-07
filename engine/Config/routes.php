@@ -6,9 +6,9 @@ return [
         'controller' => 'user',
         'method'     => 'guest'
     ],
-    "register" => [
+    "user" => [
         'controller' => 'user',
-        'method'     => 'register',
+        'method'     => 'user',
     ],
     "signup" => [
         'controller' => 'user',
@@ -16,20 +16,7 @@ return [
     ],
     "signin" => [
         'controller' => 'user',
-        'method'     => 'signin'
-    ],
-    // "author" => [
-    //     'controller' => 'user',
-    //     'method'     => 'author'
-    // ],
-    // "main" => [
-    //     'controller' => 'user',
-    //     'method'     => 'main'
-    // ],
-    
-    // "allUser" => [
-    //     'controller' => 'user',
-    //     'method'     => 'allUser'
-    // ],
+        'method'     => 'user'
+    ]
 
 ];

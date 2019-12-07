@@ -3,3 +3,12 @@
     font-weight: 700;
     font-size: 20px;
 }
+.bg_000{
+    background: #000;
+}
+.bg_silver{
+    background: silver;
+}
+.br_000{
+    border: 1px solid #000;
+}

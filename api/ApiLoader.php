@@ -7,13 +7,14 @@ class ApiLoader
 {
     private $object;
     private $method;
-    private $id;
 
     public function __construct($url)
     {
         $params = explode("/", $url);
         $this->object = $params[1];
-        $this->method = $params[2];
+        $method       = $params[2];
+        $this->method = preg_replace("#\?.*$#", null, $method);
+       
     }
 
     public function run()
