@@ -12,3 +12,24 @@
 .br_000{
     border: 1px solid #000;
 }
+.center_image{
+
+    /* margin: auto 0 !important; */
+    /* max-height: 550px !important; */
+}
+.carousel-inner{
+    border:  15px solid rgb(236, 35, 226);
+    border-radius: 20px;
+}
+.btn_salat{
+    background: #000;
+    color: gold;
+    font-size: 600;
+    /* border:  5px solid rgb(236, 35, 226); */
+}
+.text_red{
+    color: red !important;
+}
+.disabled{
+    display: none;
+}

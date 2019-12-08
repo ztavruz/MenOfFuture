@@ -6,21 +6,20 @@ window.onload = function()
             login : document.querySelector('#login').value,
             password : document.querySelector('#password').value
         }
+        user = JSON.stringify(user);
 
         let fd = new FormData();
-        user = JSON.stringify(user);
         fd.append("user", user);
 
         axios.post("api/user/signin", fd)
         .then(function(response){
-            let data = response.data
-            // console.log(data);
+            let data = response.data;
+            let host = data.pageHost;
             let user = JSON.stringify(data);
-            // console.log(data.id);
-            // console.log(user);
+            
             localStorage.setItem('user', user);
 
-            document.location.href = "http://menoffuture/user";
+            document.location.href = host + "user";
         });
     };
 

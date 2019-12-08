@@ -25,37 +25,41 @@ class User extends Connect
 
     public function signup()
     {
-        $data = $_POST;
-
-        $users = R::dispense("users");
-        $users->login = $data['login'];
-        $users->email = $data['email'];
-        $users->password = password_hash($data['password'], PASSWORD_DEFAULT);
-
-        R::store($users);
-    }
-
-    public function signin(){
-        
+        $data = [
+            'login' => 'login'
+        ];
         $data     = json_decode($_POST['user'], true);
         $login    = $data['login'];
         $password = $data['password'];
 
-        // var_dump($data);
+        $users = R::dispense("users");
+        $users->login = $login;
+        $users->email = $password;
+        $users->password = password_hash($password, PASSWORD_DEFAULT);
+        R::store($users);
+
+        $user = $this->getUser($login);
+
+        echo json_encode($user);
+    }
+
+    public function signin(){
+        
+
+        $data     = json_decode($_POST['user'], true);
+        $login    = $data['login'];
+        $password = $data['password'];
+
         $bind     = [ $login ];
         $count = R::findOne('users', 'login = ?', $bind);
 
-        // var_dump($data);
         if($count){
-
 
             if(password_verify($password, $count['password'])){
 
-                echo json_encode($this->getUser($login)); 
-                // echo $user;
-                // echo $user = $this->getUser($login);
-                // echo "Пароли совпали!";
-                exit();
+                $user = $this->getUser($login);
+
+                echo json_encode($user); 
 
             }else{
                 $this->errors = "Не верный пароль, попробуй ещё 100500 раз! :)";
@@ -79,11 +83,16 @@ class User extends Connect
         
     }
 
+    
+
     public function getUser($key)
     {
         $bind = [ $key ];
 
         $user = R::getRow("SELECT * FROM users WHERE login LIKE ?", $bind);
+
+        $transitionPath = $this->patch;
+        $user['pageHost'] = $transitionPath;
 
         return $user;
     }
