@@ -1,28 +1,28 @@
 <div class="container ">
-    <div class="header">
-        <div class="row bg_silver">
-            <div class="col">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="signin">
-                        <button type="button" class="btn btn-primary btn_salat">Вход</button>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="signup">
-                            <button type="button" class="btn btn-primary btn_salat">Регистрация</button>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
+    <div class="row bg_silver">
+        <div class="col">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <button type="button" id="entrance" class="btn btn-primary btn_salat">Вход</button>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup">
+                        <button type="button" class="btn btn-primary btn_salat">Регистрация</button>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+
     <div class="slider">
         <div class="row">
-            <div class="col-1 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+            <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-2">
 
             </div>
-            <div class="col-10 col-sm-8 col-md-8 col-lg-10 col-xl-10">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-8">
 
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
@@ -47,7 +47,7 @@
                 </div>
 
             </div>
-            <div class="col-1 col-sm-2 col-md-2 col-lg-1 col-xl-1">
+            <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-2">
 
             </div>
         </div>

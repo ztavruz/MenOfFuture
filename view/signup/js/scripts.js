@@ -85,12 +85,20 @@ window.onload = function(){
         if(error == 0 ){
             axios.post("api/user/signup", fd)
             .then(function(response){
-            let data = response.data;
-            let host = data.pageHost;
-            let user = JSON.stringify(data)
+            let data  = response.data;
+            let host  = data.pageHost;
+            let user  = data.user
+            let token = data.token
 
+            user  = JSON.stringify(user);
+            token = JSON.stringify(token);
             
+            // console.log(host);
+            // console.log(user);
+            // console.log(token);
+
             localStorage.setItem('user', user);
+            localStorage.setItem('token', token);
             document.location.href = host + "user";
         });
         }

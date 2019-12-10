@@ -23,9 +23,6 @@ class Connect
         
         $this->hostMonitoring();
 
-
-        
-
         if (!R::testConnection()) {
             R::setup("mysql:host=localhost;dbname={$this->dbname}", 
             "{$this->login}", 
@@ -49,22 +46,22 @@ class Connect
                 $this->password = "";
                 $this->patch = $this->http . "://" . $this->host . "/";
                 break;
-        }
+        }   
     }
 
-    // public function view()
-    // {
-    //     var_dump($this->host);
-    //     echo "<br>";
-    //     echo "<br>";
-    //     var_dump($this->dbname);
-    //     echo "<br>";
-    //     echo "<br>";
-    //     var_dump($this->login);
-    //     echo "<br>";
-    //     echo "<br>";
-    //     var_dump($this->password);
-    //     echo "<br>";
-    //     echo "<br>";
-    // }
+    public function view()
+    {
+        var_dump($this->host);
+        echo "<br>";
+        echo "<br>";
+        var_dump($this->dbname);
+        echo "<br>";
+        echo "<br>";
+        var_dump($this->login);
+        echo "<br>";
+        echo "<br>";
+        var_dump($this->password);
+        echo "<br>";
+        echo "<br>";
+    }
 }

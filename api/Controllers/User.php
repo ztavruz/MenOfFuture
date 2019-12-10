@@ -2,10 +2,25 @@
 
 namespace Api\Controllers;
 use \RedBeanPHP\R as R;
+use Engine\Token\Token;
+use Api\Controllers\Connect;
 
 
 class User extends Connect
 {
+    private $data;
+    public  $token;
+    public  $errors;
+
+    public function __construct(){
+
+        parent::__construct();
+
+        $this->data = $_POST;
+        $this->token = new Token();
+        $connect = new Connect();
+    }
+
     public function getAll()
     {
         $users = R::getAll("SELECT * FROM users");
@@ -25,10 +40,8 @@ class User extends Connect
 
     public function signup()
     {
-        $data = [
-            'login' => 'login'
-        ];
-        $data     = json_decode($_POST['user'], true);
+        $result = [];
+        $data     = json_decode($this->data['user'], true);
         $login    = $data['login'];
         $password = $data['password'];
 
@@ -38,28 +51,60 @@ class User extends Connect
         $users->password = password_hash($password, PASSWORD_DEFAULT);
         R::store($users);
 
-        $user = $this->getUser($login);
+        $user = $this->getUserByLogin($login);
+        $result['user'] = $user;
+        $result['token'] = $this->token->createToken($user);
+        $result['pageHost'] = $this->patch;
 
-        echo json_encode($user);
+        echo json_encode($result);
+    }
+
+    public function author(){
+        
+        $result = [];
+        $validate;
+
+        $token = json_decode($_POST['token'], true);
+
+        if(isset($token)){
+            
+            $isToken = $this->token->validateToken($token);
+            $result['pageHost'] = $this->patch;
+            $result['validate'] = $isToken;
+        }
+        else
+        {
+            $result['pageHost'] = $this->patch;
+            $result['validate'] = $isToken;
+        }
+
+        echo json_encode($result);
     }
 
     public function signin(){
-        
 
-        $data     = json_decode($_POST['user'], true);
+        $data     = json_decode($this->data['user'], true);
+
         $login    = $data['login'];
         $password = $data['password'];
 
-        $bind     = [ $login ];
+        $bind = [ $login ];
         $count = R::findOne('users', 'login = ?', $bind);
 
         if($count){
 
             if(password_verify($password, $count['password'])){
 
-                $user = $this->getUser($login);
+                $result = [];
 
-                echo json_encode($user); 
+                $user = $this->getUserByLogin($login);
+                $token = $this->token->createToken($user);
+
+                $result['pageHost'] = $this->patch;
+                $result['user'] = $user;
+                $result['token'] = $token;
+
+                echo json_encode($result); 
 
             }else{
                 $this->errors = "Не верный пароль, попробуй ещё 100500 раз! :)";
@@ -85,14 +130,20 @@ class User extends Connect
 
     
 
-    public function getUser($key)
+    public function getUserByLogin($key)
     {
         $bind = [ $key ];
 
         $user = R::getRow("SELECT * FROM users WHERE login LIKE ?", $bind);
 
-        $transitionPath = $this->patch;
-        $user['pageHost'] = $transitionPath;
+        return $user;
+    }
+
+    public function getUserById($key)
+    {
+        $bind = [ $key ];
+
+        $user = R::getRow("SELECT * FROM users WHERE id LIKE ?", $bind);
 
         return $user;
     }

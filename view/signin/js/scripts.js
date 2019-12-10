@@ -1,5 +1,6 @@
 window.onload = function()
 {
+    
     let btn = document.querySelector(".btn").onclick = function(){
         // btn.preventDefault();
         let user = {
@@ -13,11 +14,15 @@ window.onload = function()
 
         axios.post("api/user/signin", fd)
         .then(function(response){
-            let data = response.data;
-            let host = data.pageHost;
-            let user = JSON.stringify(data);
+            let data  = response.data;
+            let host  = data.pageHost;
+            let token = data.token;
+            let user  = data.user
+            user    = JSON.stringify(user);
+            token   = JSON.stringify(token);
             
             localStorage.setItem('user', user);
+            localStorage.setItem('token', token);
 
             document.location.href = host + "user";
         });
