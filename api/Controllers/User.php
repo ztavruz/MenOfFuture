@@ -44,10 +44,11 @@ class User extends Connect
         $data     = json_decode($this->data['user'], true);
         $login    = $data['login'];
         $password = $data['password'];
+        $email    = $data['email'];
 
         $users = R::dispense("users");
         $users->login = $login;
-        $users->email = $password;
+        $users->email = $email;
         $users->password = password_hash($password, PASSWORD_DEFAULT);
         R::store($users);
 
