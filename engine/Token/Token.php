@@ -12,8 +12,9 @@ class Token
     {
         
         $this->header = [
-            "alg" => "HS256", 
-            "typ" => "JWT"
+            "alg"   => "sha256", 
+            "typ"   => "JWT",
+            "end"   => $this->setEndToken(30) // параметр задается количеством дней(30)
         ];
         
         $this->secret = 'ztavruz';
@@ -22,6 +23,9 @@ class Token
     public function createToken($user)
     {
         $header = $this->header;
+
+        
+        $alg = $header['alg'];
         $header = json_encode($header);
         $payload = [
             "id"    => $user['id'],
@@ -35,7 +39,7 @@ class Token
         $payload = base64_encode($payload);
 
         $signature = $header . "." . $payload;
-        $signature = hash_hmac("sha256", $signature, $secret);
+        $signature = hash_hmac($alg, $signature, $secret);
         $signature = base64_encode($signature);
 
         $token = $header . "." . $payload . "." . $signature;
@@ -50,20 +54,34 @@ class Token
         $str = $arr[0] . "." . $arr[1];
         $secret = $this->secret;
 
-        $str = hash_hmac("sha256", $str, $secret);
-        $str = base64_encode($str);
-        $signature = $arr[2];
+        if($this->relevanceTokenTime($arr[0]))
+        {   
+            $token = $this->parseToken($token);
+            $header = $token['header'];
 
-        $equal = hash_equals($str, $signature);
+            $str = hash_hmac($header['alg'], $str, $secret);
+            $str = base64_encode($str);
+            $signature = $arr[2];
 
-        // var_dump($str);
-        // echo "<br>";
-        // echo "<br>";
-        // var_dump($str);
-        // echo "<br>";
-        // echo "<br>";
-        // var_dump($equal);
-        return $equal;
+            $equal = hash_equals($str, $signature);
+
+            return $equal;
+        }
+
+    }
+
+    private function relevanceTokenTime($item)
+    {
+        $item = base64_decode($item);
+        $item = json_decode($item, true);
+        $endToken = $item['end'];
+        $currentData = time();
+        if($endToken > $currentData)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public function parseToken($token)
@@ -81,7 +99,20 @@ class Token
         $data["payload"] = $payload;
 
         return $data;
+    }
 
-        // var_dump($header);
+    private function setEndToken($days)
+    {
+        $start = time();
+        $srok  = $this->getDays($days);
+        // $srok = 10;
+        $result   = $start + $srok;
+        return $result;
+    }
+
+    public function getDays($kolvo)
+    {
+        $result = 1*60*60*24*$kolvo;
+        return $result;
     }
 }

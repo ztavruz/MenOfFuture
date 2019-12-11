@@ -5,6 +5,4 @@ window.onload = function()
 
     document.querySelector('.user').innerHTML = user.login;
 
-    // this.console.log(user.login);
-    // this.console.log(user[1]);
 }

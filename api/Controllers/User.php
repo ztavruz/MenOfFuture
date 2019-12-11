@@ -65,20 +65,35 @@ class User extends Connect
         $validate;
 
         $token = json_decode($_POST['token'], true);
+        $validate = $this->token->validateToken($token);
 
-        if(isset($token)){
+        if($token != null ){
             
-            $isToken = $this->token->validateToken($token);
-            $result['pageHost'] = $this->patch;
-            $result['validate'] = $isToken;
-        }
-        else
-        {
-            $result['pageHost'] = $this->patch;
-            $result['validate'] = $isToken;
-        }
+    
+            if($validate != false){
+                $result['pageHost'] = $this->patch;
+                $result['validate'] = $validate;
 
-        echo json_encode($result);
+                echo json_encode($result);
+                
+            }else
+            {   $this->errors = "Токен не валиден!";
+
+                $result['pageHost'] = $this->patch;
+                $result['validate'] = $validate;
+                $result['errors']   = $this->errors;
+                echo json_encode($result);
+            
+            }
+        }else
+        {
+            $this->errors = "Токен отсутствует!";
+
+            $result['pageHost'] = $this->patch;
+            $result['validate'] = $validate;
+            $result['errors']   = $this->errors;
+            echo json_encode($result);
+        }
     }
 
     public function signin(){
@@ -91,11 +106,11 @@ class User extends Connect
         $bind = [ $login ];
         $count = R::findOne('users', 'login = ?', $bind);
 
+        $result = [];
         if($count){
 
             if(password_verify($password, $count['password'])){
 
-                $result = [];
 
                 $user = $this->getUserByLogin($login);
                 $token = $this->token->createToken($user);
@@ -107,13 +122,20 @@ class User extends Connect
                 echo json_encode($result); 
 
             }else{
+
                 $this->errors = "Не верный пароль, попробуй ещё 100500 раз! :)";
-                echo "Пароли не совпали!";
+
+                $result['pageHost'] = $this->patch;
+                $result['errors']   = $this->errors;
+                echo json_encode($result);
             }
 
         }else{
             $this->errors = "Нет такого логина в моей базе данных.";
-            echo "Логина нет!";
+
+            $result['pageHost'] = $this->patch;
+            $result['errors']   = $this->errors;
+            echo json_encode($result);
         }
 
     }
@@ -127,8 +149,6 @@ class User extends Connect
     {
         
     }
-
-    
 
     public function getUserByLogin($key)
     {
